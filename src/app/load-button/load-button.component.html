@@ -1,0 +1,3 @@
+<button [class.blocked]="waitingStatus" (click)="loadImage()" [disabled]="waitingStatus">
+  {{ waitingStatus ? 'Загрузка...' : 'Загрузить' }}
+</button>

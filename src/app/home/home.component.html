@@ -1,0 +1,27 @@
+<section class="home">
+  <div class="controls">
+    <input type="text" name="" placeholder="Введите тэг" [(ngModel)]="currentTag">
+    <app-load-button [tag]="currentTag" [url]="url" (onLoaded)="getImage($event)" (onError)="handleError($event)">
+    </app-load-button>
+    <app-clear-button (onClear)="clear()"></app-clear-button>
+    <app-group-button (onGroup)="groupImages()"></app-group-button>
+  </div>
+  <div class="error-tooltip" [class.hidden]="!error">{{ error }}</div>
+  <div class="img-container" *ngIf="!needGrouping; else groupedImgContainer">
+    <app-card class="img-card" (onCardClick)="setTag($event)" *ngFor="let image of images; index as i"
+      [imageSrc]="image.imageUrl" [tag]="image.tag">
+    </app-card>
+  </div>
+  <ng-template #groupedImgContainer>
+    <div class="img-groups-container" *ngFor="let group of groupedImages | keyvalue">
+      <div class="group-wrapper">
+        <h1>{{ group.key }}</h1>
+        <div class="img-wrapper">
+          <app-card class="img-card" (onCardClick)="setTag($event)" *ngFor="let image of group.value; index as i"
+            [imageSrc]="image" [tag]="group.key">
+          </app-card>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</section>
